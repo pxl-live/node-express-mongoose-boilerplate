@@ -14,7 +14,12 @@ const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 
+const { socketController } = require('./controllers');
+
 const app = express();
+
+const server = require('http').createServer(app);
+socketController.socketio(server);
 
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
